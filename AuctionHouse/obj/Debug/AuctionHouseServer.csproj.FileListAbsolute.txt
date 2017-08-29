@@ -1,0 +1,6 @@
+C:\Users\Kristian\documents\visual studio 2015\Projects\AuctionHouse\AuctionHouse\bin\Debug\AuctionHouse.exe.config
+C:\Users\Kristian\documents\visual studio 2015\Projects\AuctionHouse\AuctionHouse\bin\Debug\AuctionHouse.exe
+C:\Users\Kristian\documents\visual studio 2015\Projects\AuctionHouse\AuctionHouse\bin\Debug\AuctionHouse.pdb
+C:\Users\Kristian\documents\visual studio 2015\Projects\AuctionHouse\AuctionHouse\obj\Debug\AuctionHouseServer.csprojResolveAssemblyReference.cache
+C:\Users\Kristian\documents\visual studio 2015\Projects\AuctionHouse\AuctionHouse\obj\Debug\AuctionHouse.exe
+C:\Users\Kristian\documents\visual studio 2015\Projects\AuctionHouse\AuctionHouse\obj\Debug\AuctionHouse.pdb

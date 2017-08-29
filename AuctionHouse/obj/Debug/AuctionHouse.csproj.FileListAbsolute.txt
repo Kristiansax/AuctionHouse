@@ -1,0 +1,1 @@
+c:\users\kristian\documents\visual studio 2015\Projects\AuctionHouse\AuctionHouse\bin\Debug\AuctionHouse.exe.config
