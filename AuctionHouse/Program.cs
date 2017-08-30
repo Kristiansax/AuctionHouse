@@ -48,7 +48,7 @@ namespace AuctionHouse
         }
         static void Main(string[] args)
         {
-            TcpListener server = new TcpListener(IPAddress.Any, 20001);
+            TcpListener server = new TcpListener(IPAddress.Any, 0);
             server.Start();
             while (true)
             {
