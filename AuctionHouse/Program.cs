@@ -59,7 +59,7 @@ namespace AuctionHouse
                     Thread t = new Thread(() => program.ClientThread(klient));
                     t.Start();
 
-                    //new Thread(program.ClientThread(klient)).Start(klient);
+                    //new Thread(program.ClientThread(klient)).Start(klient); old
                 }
             }
         }
