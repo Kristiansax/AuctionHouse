@@ -12,7 +12,7 @@ namespace AuctionHouse
 {
     class Program
     {
-        static private List<Auction> Auctions = new List<Auction>();
+        static private List<Auction> AuctionList = new List<Auction>();
         static private List<Socket> Clients = new List<Socket>();
 
         private void ClientThread(Socket klient)
@@ -44,6 +44,12 @@ namespace AuctionHouse
                         writer.WriteLine();
                         break;
                     case "auctions":
+                        foreach (Auction auction in AuctionList)
+                        {
+                            writer.WriteLine(auction.name);
+                            writer.WriteLine(auction.price);
+                            writer.WriteLine();
+                        }
                         break;
                 }
             }
