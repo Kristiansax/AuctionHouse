@@ -12,7 +12,9 @@ namespace AuctionHouse
 {
     class Program
     {
-        List<Auction> Auctions = new List<Auction>();
+        static private List<Auction> Auctions = new List<Auction>();
+        static private List<Socket> Clients = new List<Socket>();
+
         private void ClientThread(Socket klient)
         {
             NetworkStream stream = new NetworkStream(klient);
@@ -44,7 +46,7 @@ namespace AuctionHouse
                     case "auctions":
                         break;
                 }
-                }
+            }
         }
         static void Main(string[] args)
         {
@@ -55,17 +57,31 @@ namespace AuctionHouse
                 while (true)
                 {
                     Program program = new Program();
-                    Socket klient = server.AcceptSocket();
-                    Thread t = new Thread(() => program.ClientThread(klient));
+                    Socket client = server.AcceptSocket();
+                    Clients.Add(client);
+                    Thread t = new Thread(() => program.ClientThread(client));
                     t.Start();
 
                     //new Thread(program.ClientThread(klient)).Start(klient); old
                 }
             }
         }
+        private void SendMessageToAllClients(string message) //Burde måske være en gavel metode i Auction.cs?
+        {
+            foreach(Socket client in Clients)
+            {
+                SendMessage(message, client);
+            }
+        }
 
+        private static void SendMessage(string message, Socket client)
+        {
+            NetworkStream stream = new NetworkStream(client);
+            StreamReader reader = new StreamReader(stream);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.AutoFlush = true;
 
-
-
+            writer.WriteLine(message);
+        }
     }
 }

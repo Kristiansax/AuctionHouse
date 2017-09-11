@@ -13,12 +13,20 @@ namespace AuctionHouseClient
     {
         static void Main(string[] args)
         {
+            Program CProgram = new Program();
+            CProgram.Run();
+        }
+
+        private void Run()
+        {
             TcpClient server = new TcpClient("localhost", 0);
             NetworkStream stream = server.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
             writer.AutoFlush = true;
 
+            Console.WriteLine("ENTER NICKNAME"); //Seadog
+            writer.WriteLine(Console.ReadLine());
             Console.WriteLine(reader.ReadLine());
             while (true)
             {
