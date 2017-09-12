@@ -19,7 +19,7 @@ namespace AuctionHouseClient
 
         private void Run()
         {
-            TcpClient server = new TcpClient("localhost", 0);
+            TcpClient server = new TcpClient("localhost", 11000);
             NetworkStream stream = server.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);

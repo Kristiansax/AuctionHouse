@@ -9,6 +9,7 @@ namespace AuctionHouse
     public class Auction
     {
         public string name { get; set; }
-        public double price { get; set; }
+        public double currentbid { get; set; }
+        public string currenthighestbidder { get; set; }
     }
 }

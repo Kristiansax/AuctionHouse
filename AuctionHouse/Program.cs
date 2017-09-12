@@ -31,23 +31,45 @@ namespace AuctionHouse
             }
 
 
+            
+            string name;
+            name = reader.ReadLine();
             writer.WriteLine("Ready");
+
             while (true)
             {
                 string input = reader.ReadLine();
                 switch (input.ToLower())
                 {
                     case "test":
-                        writer.WriteLine("test returned");
+                        writer.WriteLine("test returned.");
+                        writer.WriteLine();
                         break;
                     case "bid":
+                        writer.WriteLine("Enter auction name:");
+                        string a = reader.ReadLine();
+                        writer.WriteLine("Enter bid:");
+                        double b = Convert.ToDouble(reader.ReadLine());
+                        foreach (Auction auction in AuctionList)
+                        {
+                            if (a == auction.name && b > auction.currentbid)
+                            {
+                                auction.currenthighestbidder = name;
+                                auction.currentbid = b;
+                                SendMessageToAllClients(name + " has the highest bid on " + auction);
+                            }
+                            else
+                            {
+                                writer.WriteLine("Auction not found, try again.");
+                            }
+                        }
                         writer.WriteLine();
                         break;
                     case "auctions":
                         foreach (Auction auction in AuctionList)
                         {
-                            writer.WriteLine(auction.name);
-                            writer.WriteLine(auction.price);
+                            writer.WriteLine("Auction: " + auction.name);
+                            writer.WriteLine("Current highest bidder: " + auction.currenthighestbidder + "with a bid of" + auction.currentbid);
                             writer.WriteLine();
                         }
                         break;
@@ -56,7 +78,7 @@ namespace AuctionHouse
         }
         static void Main(string[] args)
         {
-            TcpListener server = new TcpListener(IPAddress.Any, 0);
+            TcpListener server = new TcpListener(IPAddress.Any, 11000);
             server.Start();
             while (true)
             {
