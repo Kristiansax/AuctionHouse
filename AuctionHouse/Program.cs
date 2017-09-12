@@ -63,6 +63,7 @@ namespace AuctionHouse
                                 {
                                     auction.currenthighestbidder = name;
                                     auction.currentbid = b;
+                                    auction.newhighestbidder = true;
                                     SendMessageToAllClients(name + " has the highest bid on " + auction.name);
                                 }
                                 else
@@ -103,7 +104,7 @@ namespace AuctionHouse
                 }
                 else
                 {
-                    writer.WriteLine("Current highest bidder: " + auction.currenthighestbidder + "with a bid of" + auction.currentbid);
+                    writer.WriteLine("Current highest bidder: " + auction.currenthighestbidder + " with a bid of " + auction.currentbid);
                     writer.WriteLine();
                 }
             }
@@ -122,6 +123,11 @@ namespace AuctionHouse
             AuctionList.Add(Sko);
             AuctionList.Add(Hammer);
 
+            foreach (Auction a in AuctionList)
+            {
+                Thread gavel = new Thread(() => Gavel(a));
+            }
+
             while (true)
             {
                 while (true)
@@ -131,12 +137,65 @@ namespace AuctionHouse
                     Clients.Add(client);
                     Thread t = new Thread(() => program.ClientThread(client));
                     t.Start();
-
-                    //new Thread(program.ClientThread(klient)).Start(klient); old
                 }
             }
         }
-        private void SendMessageToAllClients(string message) //Burde måske være en gavel metode i Auction.cs?
+
+        private static void Gavel(Auction a)
+        {
+            while (true)
+            {
+                if (a.currenthighestbidder != null)
+                {
+                    for (int i = 10; i > 0; i--)
+                    {
+                        if (a.newhighestbidder == true)
+                        {
+                            i = 10;
+                            foreach (Socket client in Clients)
+                            {
+                                GavelMessage(i, client, a);
+                            }
+                            a.newhighestbidder = false;
+                        }
+                        if (i == 5 || i == 3 || i == 1) ;
+                        {
+                            foreach (Socket client in Clients)
+                            {
+                                GavelMessage(i, client, a);
+                            }
+                        }
+                        Thread.Sleep(500);
+                    }
+                }
+            }
+        }
+
+        internal static void GavelMessage(int i, Socket klient, Auction a)
+        {
+            NetworkStream stream = new NetworkStream(klient);
+            StreamReader reader = new StreamReader(stream);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.AutoFlush = true;
+            writer.WriteLine();
+            if (i == 10)
+            {
+                writer.WriteLine("NEW BID - GAVEL IS STARTED FOR " + a.name);
+            }
+            if (i == 5)
+            {
+                writer.WriteLine("FIRST - FIRST FOR " + a.name);
+            }
+            if (i == 3)
+            {
+                writer.WriteLine("SECOND - SECOND " + a.name);
+            }
+            if (i == 1)
+            {
+                writer.WriteLine(a.name + " SOLD! TO THE HIGHEST BIDDER" + a.currenthighestbidder);
+            }
+        }
+        private static void SendMessageToAllClients(string message)
         {
             foreach (Socket client in Clients)
             {
