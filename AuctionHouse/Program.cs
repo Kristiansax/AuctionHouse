@@ -30,7 +30,6 @@ namespace AuctionHouse
                 Console.WriteLine("I am connected to " + remoteIpEndPoint.Address + " on port number " + remoteIpEndPoint.Port);
             }
 
-
             
             string name;
             name = reader.ReadLine();
@@ -72,6 +71,10 @@ namespace AuctionHouse
                             writer.WriteLine("Current highest bidder: " + auction.currenthighestbidder + "with a bid of" + auction.currentbid);
                             writer.WriteLine();
                         }
+                        break;
+                    default:
+                        writer.WriteLine("default");
+                        writer.WriteLine();
                         break;
                 }
             }
